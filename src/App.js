@@ -1,8 +1,8 @@
+import { Categories } from "./components/categories/categories.component";
+
 function App() {
   return (
-    <div>
-      Hello Friends!
-    </div>
+    <Categories />
   );
 }
 
