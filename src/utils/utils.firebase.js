@@ -4,14 +4,10 @@ import {
   signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
 } from "@firebase/auth";
 import { getAnalytics } from "@firebase/analytics";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc
-} from "@firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc } from "@firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDspohKTvDKRfdaksmLd2pi32y5qhShJMU",
@@ -26,18 +22,30 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAnalytics = getAnalytics(firebaseApp);
 
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGooglePopup = () =>
+  signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, googleProvider);
 
 export const database = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth) => {
-  const userDocRef = doc(database, 'users', userAuth.uid);
+const CREATE_USER_ERROR = {
+  "auth/email-already-in-use":
+    "There's already an account registered with this e-mail",
+  "auth/invalid-email": "Please use a valid e-mail",
+  "auth/weak-password": "Password should be at least 6 characters",
+};
+
+export const createUserDocumentFromAuth = async (userAuth, extraData = {}) => {
+  if (!userAuth) return;
+
+  const userDocRef = doc(database, "users", userAuth.uid);
   const userSnapshot = await getDoc(userDocRef);
 
   if (!userSnapshot.exists()) {
@@ -48,12 +56,41 @@ export const createUserDocumentFromAuth = async (userAuth) => {
       await setDoc(userDocRef, {
         displayName,
         email,
-        createdAt
+        createdAt,
+        ...extraData,
       });
+
+      alert("User registered successfully!");
+      return userDocRef;
     } catch (error) {
-      console.log("Error creating user\n", error.message)
+      alert(
+        CREATE_USER_ERROR[error.code] ??
+          `Error creating user:\n${error.message}`
+      );
     }
   }
 
   return userDocRef;
-}
+};
+
+export const createAuthUserWithEmailAndPassword = async ({
+  email,
+  password,
+  displayName,
+}) => {
+  if (!email || !password || !displayName) return;
+
+  try {
+    const { user } = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    return await createUserDocumentFromAuth(user, { displayName });
+  } catch (error) {
+    alert(
+      CREATE_USER_ERROR[error.code] ?? `Error creating user:\n${error.message}`
+    );
+  }
+};
