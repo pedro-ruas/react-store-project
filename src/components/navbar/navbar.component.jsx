@@ -12,6 +12,9 @@ export function Navbar() {
         <Link className="Navbar-Link" to="/shop">
           SHOP
         </Link>
+        <Link className="Navbar-Link" to="/auth">
+          SIGN IN
+        </Link>
       </div>
     </div>
   );
