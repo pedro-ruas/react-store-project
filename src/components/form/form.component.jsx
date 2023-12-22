@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./form.styles.scss";
+import { Button } from "../button/button.component";
 
 export function Form(props) {
   const {
@@ -8,6 +9,8 @@ export function Form(props) {
     submitButtonText = "Submit",
     onSubmit,
     onChange,
+    buttonProps = {},
+    extraButton,
   } = props;
 
   const [formFields, setFormFields] = useState(fields);
@@ -55,21 +58,24 @@ export function Form(props) {
                 placeholder={fields.placeholder}
                 name={fieldKey}
                 onChange={handleChange}
-                />
-                {field.label && (
-                  <label
-                    className={`Form-Field-Label${
-                      field.value !== "" ? "_isFilled" : ""
-                    }`}
-                  >
-                    {field.label}
-                  </label>
-                )}
+              />
+              {field.label && (
+                <label
+                  className={`Form-Field-Label${
+                    field.value !== "" ? "_isFilled" : ""
+                  }`}
+                >
+                  {field.label}
+                </label>
+              )}
             </div>
           );
         })}
 
-        <button type="submit">{submitButtonText}</button>
+        <div className="Form-Buttons-Container">
+          <Button type="submit" text={submitButtonText} {...buttonProps} />
+          {extraButton && extraButton}
+        </div>
       </form>
     </div>
   );

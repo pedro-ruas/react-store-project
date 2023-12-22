@@ -1,0 +1,12 @@
+.SignInForm {
+  &-Container {
+    display: flex;
+    flex-direction: column;
+    max-width: 380px;
+    width: 100%;
+  }
+
+  &-Header {
+    margin: 10px 0;
+  }
+}

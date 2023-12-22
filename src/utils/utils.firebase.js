@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from "@firebase/auth";
 import { getAnalytics } from "@firebase/analytics";
 import { getFirestore, doc, getDoc, setDoc } from "@firebase/firestore";
@@ -41,6 +42,11 @@ const CREATE_USER_ERROR = {
   "auth/invalid-email": "Please use a valid e-mail",
   "auth/weak-password": "Password should be at least 6 characters",
 };
+
+const LOGIN_USER_ERROR = {
+  "auth/wrong-password": "E-mail and password don't match",
+  "auth/user-not-found": "This e-mail doesn't have an account"
+}
 
 export const createUserDocumentFromAuth = async (userAuth, extraData = {}) => {
   if (!userAuth) return;
@@ -91,6 +97,21 @@ export const createAuthUserWithEmailAndPassword = async ({
   } catch (error) {
     alert(
       CREATE_USER_ERROR[error.code] ?? `Error creating user:\n${error.message}`
+    );
+  }
+};
+
+export const signInUserWithEmailAndPassword = async ({
+  email,
+  password,
+}) => {
+  if (!email || !password) return;
+
+  try {
+    return await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    alert(
+      LOGIN_USER_ERROR[error.code] ?? `Something went wrong:\n${error.message}`
     );
   }
 };

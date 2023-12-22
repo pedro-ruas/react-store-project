@@ -1,6 +1,7 @@
 import { Form } from "../form/form.component";
 import { createAuthUserWithEmailAndPassword } from "../../utils/utils.firebase";
 import { useState } from "react";
+import "./sign-up-form.styles.scss";
 
 const SIGN_UP_FORM = {
   fields: {
@@ -54,7 +55,10 @@ export function SignUpForm(props) {
   };
 
   return (
-    <Form {...SIGN_UP_FORM} onChange={setSignUpFields} onSubmit={onSubmit} />
+    <div className="SignUpForm-Container">
+      <h2 className="SignUpForm-Header"> Don't have an account?</h2>
+      <Form {...SIGN_UP_FORM} onChange={setSignUpFields} onSubmit={onSubmit} />
+    </div>
   );
 }
 
