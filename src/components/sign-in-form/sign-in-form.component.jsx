@@ -1,8 +1,6 @@
 import { Form } from "../form/form.component";
 import {
-  createAuthUserWithEmailAndPassword,
   signInWithGooglePopup,
-  createUserDocumentFromAuth,
   signInUserWithEmailAndPassword,
 } from "../../utils/utils.firebase";
 import { useState } from "react";
@@ -28,7 +26,8 @@ async function validateAndLogin(signInData) {
     email: { value: email },
     password: { value: password },
   } = signInData;
-  return await signInUserWithEmailAndPassword(email, password);
+
+  return await signInUserWithEmailAndPassword({ email, password });
 }
 
 export function SignInForm(props) {
@@ -39,11 +38,6 @@ export function SignInForm(props) {
     validateAndLogin(signInFields);
   };
 
-  const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup();
-    return await createUserDocumentFromAuth(user);
-  };
-
   return (
     <div className="SignInForm-Container">
       <Form
@@ -52,7 +46,7 @@ export function SignInForm(props) {
         onSubmit={onSubmit}
         extraButton={
           <Button
-            onClick={logGoogleUser}
+            onClick={signInWithGooglePopup}
             className="Button-GoogleSign"
             text="Google Sign In"
           />

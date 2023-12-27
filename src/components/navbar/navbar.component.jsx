@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
 import { ReactComponent as StoreLogo } from "../../assets/logo.svg";
+import { UserContext } from "../../contexts/user.context";
+import { useContext } from "react";
+
 import "./navbar.styles.scss";
+import { signOutUser } from "../../utils/utils.firebase";
 
 export function Navbar() {
+  const { currentUser } = useContext(UserContext);
+
   return (
     <div className="Navbar">
       <Link className="Navbar-Link_isLogo" to="/">
@@ -12,9 +18,15 @@ export function Navbar() {
         <Link className="Navbar-Link" to="/shop">
           SHOP
         </Link>
-        <Link className="Navbar-Link" to="/auth">
-          SIGN IN
-        </Link>
+        {currentUser ? (
+          <span className="Navbar-Link" onClick={signOutUser}>
+            SIGN OUT
+          </span>
+        ) : (
+          <Link className="Navbar-Link" to="/auth">
+            SIGN IN
+          </Link>
+        )}
       </div>
     </div>
   );

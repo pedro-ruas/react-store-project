@@ -6,6 +6,8 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
 } from "@firebase/auth";
 import { getAnalytics } from "@firebase/analytics";
 import { getFirestore, doc, getDoc, setDoc } from "@firebase/firestore";
@@ -29,10 +31,16 @@ googleProvider.setCustomParameters({
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () =>
-  signInWithPopup(auth, googleProvider);
-export const signInWithGoogleRedirect = () =>
-  signInWithRedirect(auth, googleProvider);
+
+export const signInWithGooglePopup = async () => {
+  const { user } = await signInWithPopup(auth, googleProvider)
+  return await createUserDocumentFromAuth(user);
+};
+
+export const signInWithGoogleRedirect = async () =>{
+  const { user } = await signInWithRedirect(auth, googleProvider)
+  return await createUserDocumentFromAuth(user);
+};
 
 export const database = getFirestore();
 
@@ -45,8 +53,9 @@ const CREATE_USER_ERROR = {
 
 const LOGIN_USER_ERROR = {
   "auth/wrong-password": "E-mail and password don't match",
-  "auth/user-not-found": "This e-mail doesn't have an account"
-}
+  "auth/user-not-found": "This e-mail doesn't have an account",
+  "auth/invalid-credential": "Invalid Login Method",
+};
 
 export const createUserDocumentFromAuth = async (userAuth, extraData = {}) => {
   if (!userAuth) return;
@@ -101,10 +110,7 @@ export const createAuthUserWithEmailAndPassword = async ({
   }
 };
 
-export const signInUserWithEmailAndPassword = async ({
-  email,
-  password,
-}) => {
+export const signInUserWithEmailAndPassword = async ({ email, password }) => {
   if (!email || !password) return;
 
   try {
@@ -115,3 +121,8 @@ export const signInUserWithEmailAndPassword = async ({
     );
   }
 };
+
+export const signOutUser = async () => signOut(auth);
+
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
