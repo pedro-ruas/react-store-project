@@ -1,0 +1,61 @@
+.CartDrawer {
+  &-Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-CloseButton {
+    border: none;
+    background-color: transparent;
+    color: rgb(197, 45, 45);
+    padding: 5px;
+    height: 25px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(197, 45, 45, 0.1);
+    }
+  }
+
+  &-Container {
+    position: absolute;
+    width: 240px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-left: 1px solid black;
+    background-color: white;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    animation: all 0.3s ease-in-out 0 0;
+
+    &_isClosed {
+      @extend .CartDrawer-Container;
+      width: 0;
+      padding: 0;
+      margin: 0;
+      visibility: hidden;
+      display: none;
+    }
+  }
+
+  &-Items {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  &-Message {
+    font-size: 18px;
+    margin: 50px auto;
+  }
+
+  &-GoButton {
+    margin-top: auto;
+  }
+}
