@@ -1,6 +1,7 @@
 import { Form } from "../form/form.component";
 import { createAuthUserWithEmailAndPassword } from "../../utils/utils.firebase";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../../contexts/user.context";
 import "./sign-up-form.styles.scss";
 
 const SIGN_UP_FORM = {
@@ -48,10 +49,13 @@ async function validateAndCreateUser(signUpData) {
 
 export function SignUpForm(props) {
   const [signUpFields, setSignUpFields] = useState(SIGN_UP_FORM.fields);
+  const { setCurrentUser } = useContext(UserContext);
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    validateAndCreateUser(signUpFields);
+    validateAndCreateUser(signUpFields).then((user) => {
+      setCurrentUser(user);
+    });
   };
 
   return (
