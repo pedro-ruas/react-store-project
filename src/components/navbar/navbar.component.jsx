@@ -7,10 +7,7 @@ import "./navbar.styles.scss";
 import { signOutUser } from "../../utils/utils.firebase";
 
 export function Navbar() {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
-
-  const onSignOut = async () =>
-    await signOutUser().then(() => setCurrentUser(null));
+  const { currentUser } = useContext(UserContext);
 
   return (
     <div className="Navbar">
@@ -22,7 +19,7 @@ export function Navbar() {
           SHOP
         </Link>
         {currentUser ? (
-          <span className="Navbar-Link" onClick={onSignOut}>
+          <span className="Navbar-Link" onClick={signOutUser}>
             SIGN OUT
           </span>
         ) : (
