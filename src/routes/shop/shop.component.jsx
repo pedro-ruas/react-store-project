@@ -8,8 +8,8 @@ export function ShopPage() {
 
   return (
     <div className="ShopPage-Container">
-      {availableProducts.map(({ id, ...product }) => (
-        <ProductCard key={id} {...product} />
+      {availableProducts.map((product) => (
+        <ProductCard key={product.id} product={product} />
       ))}
     </div>
   );
