@@ -39,7 +39,7 @@ export function CartItem({ cartItem }) {
               +
             </button>
           </div>
-          <span className="CartItem-Info-Price">{`U$${price}`}</span>
+          <span className="CartItem-Info-Price">{`U$${price * quantity}`}</span>
         </div>
       </div>
     </div>

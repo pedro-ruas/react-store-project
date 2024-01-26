@@ -1,0 +1,98 @@
+.CartSummary {
+  &-Container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 35px 25px 50px;
+    gap: 35px;
+    text-transform: uppercase;
+  }
+
+  &-Info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 0 35px 0;
+    margin: 0;
+    gap: 30px;
+    border-bottom: 2px solid #E4E4E4;
+
+    &-Items {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+    }
+
+    &-Shipping, &-Promo {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      height: 100%;
+
+      span {
+        font-weight: 600;
+      }
+
+      .SELECT_PLACEHOLDER, &-Input {
+        text-transform: none;
+        display: flex;
+        align-items: center;
+        border: none;
+        font-weight: 500;
+        min-height: 45px;
+        padding: 10px 20px;
+        color: #6D6D6D;
+        width: 100%;
+        background-color: #FFFFFF;
+
+        &:focus-visible {
+          outline-color: #5E56DD;
+        }
+      }
+
+      &-Button {
+        width: fit-content;
+        padding: 12px 25px;
+        border-radius: 0;
+        border: none;
+        background-color: #E77073;
+        color: #FFFFFF;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba($color: #E77073, $alpha: 0.8);
+        }
+      }
+    }
+  }
+
+  &-Total {
+    &-Overview {
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        font-weight: 600;
+      }
+    }
+  }
+
+  &-CheckoutButton {
+    padding: 15px;
+    border-radius: 0;
+    border: none;
+    background-color: #5E56DD;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba($color: #5E56DD, $alpha: 0.8);
+    }
+  }
+}

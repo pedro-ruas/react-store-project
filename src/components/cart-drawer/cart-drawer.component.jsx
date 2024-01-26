@@ -1,18 +1,22 @@
 import { useContext } from "react";
-import { Button } from "../button/button.component";
+import { Button, SecondaryButton } from "../button/button.component";
 import "./cart-drawer.styles.scss";
 import { CartContext } from "../../contexts/cart.context";
-import { CartItem } from "../cart-item/cart-item.component";
+import { useNavigate } from "react-router-dom";
+import { CartItems } from "../cart-items/cart-items.component";
 
 export function CartDrawer() {
-  const goToCart = () => console.log("Cart");
+  const navigate = useNavigate();
+  const goToCart = () => navigate("/cart");
+
   const {
-    productsInCart,
     setShowCartDrawer,
     showCartDrawer,
     cartItemsCount,
     cartTotal,
+    clearCart,
   } = useContext(CartContext);
+
   const closeDrawer = () => setShowCartDrawer(false);
 
   return (
@@ -23,20 +27,19 @@ export function CartDrawer() {
           X
         </button>
       </div>
-      {cartItemsCount > 0 ? (
-        <div className="CartDrawer-Items">
-          {Array.from(productsInCart.values()).map((product) => (
-            <CartItem key={product.id} cartItem={product} />
-          ))}
-        </div>
-      ) : (
-        <div className="CartDrawer-Message">Your cart is empty</div>
-      )}
-      <Button
-        className="CartDrawer-GoButton"
-        text="Go to Cart"
-        onClick={goToCart}
-      />
+      <CartItems showFullInfo={false} />
+      <div className="CartDrawer-Actions">
+        <SecondaryButton
+          className="CartDrawer-ClearButton"
+          text="Clear Cart"
+          onClick={clearCart}
+        />
+        <Button
+          className="CartDrawer-GoButton"
+          text="Go to Cart"
+          onClick={goToCart}
+        />
+      </div>
     </div>
   );
 }

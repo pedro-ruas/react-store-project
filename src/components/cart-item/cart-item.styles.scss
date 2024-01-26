@@ -98,6 +98,21 @@
           background-color: #dddddd;
         }
       }
+
+      &-Extras {
+        display: flex;
+        gap: 25px;
+
+        span {
+          color: #505050;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+
+    &-Description {
+      
     }
   }
 }

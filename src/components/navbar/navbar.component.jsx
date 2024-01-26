@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ReactComponent as StoreLogo } from "../../assets/logo.svg";
 import { UserContext } from "../../contexts/user.context";
 import { useContext } from "react";
@@ -10,6 +10,7 @@ import { CartDrawer } from "../cart-drawer/cart-drawer.component";
 
 export function Navbar() {
   const { currentUser } = useContext(UserContext);
+  const { pathname } = useLocation();
 
   return (
     <div className="Navbar">
@@ -30,7 +31,7 @@ export function Navbar() {
           </Link>
         )}
 
-        <CartIcon />
+        {!pathname.includes("/cart") && <CartIcon />}
       </div>
 
       <CartDrawer />
