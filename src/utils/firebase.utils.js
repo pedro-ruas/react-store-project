@@ -10,7 +10,16 @@ import {
   onAuthStateChanged,
 } from "@firebase/auth";
 import { getAnalytics } from "@firebase/analytics";
-import { getFirestore, doc, getDoc, setDoc } from "@firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+} from "@firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDspohKTvDKRfdaksmLd2pi32y5qhShJMU",
@@ -33,16 +42,32 @@ googleProvider.setCustomParameters({
 export const auth = getAuth();
 
 export const signInWithGooglePopup = async () => {
-  const { user } = await signInWithPopup(auth, googleProvider)
+  const { user } = await signInWithPopup(auth, googleProvider);
   return await createUserDocumentFromAuth(user);
 };
 
-export const signInWithGoogleRedirect = async () =>{
-  const { user } = await signInWithRedirect(auth, googleProvider)
+export const signInWithGoogleRedirect = async () => {
+  const { user } = await signInWithRedirect(auth, googleProvider);
   return await createUserDocumentFromAuth(user);
 };
 
 export const database = getFirestore();
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  collectionDocuments,
+  fieldKey = "title"
+) => {
+  const collectionRef = collection(database, collectionKey);
+  const batch = writeBatch(database);
+
+  collectionDocuments.forEach((document) => {
+    const docRef = doc(collectionRef, document[fieldKey].toLowerCase());
+    batch.set(docRef, document);
+  });
+
+  await batch.commit();
+};
 
 const CREATE_USER_ERROR = {
   "auth/email-already-in-use":
@@ -56,6 +81,20 @@ const LOGIN_USER_ERROR = {
   "auth/user-not-found": "This e-mail doesn't have an account",
   "auth/invalid-credential": "Invalid Login Method",
 };
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(database, "categories");
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const {title, items} = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+}
 
 export const createUserDocumentFromAuth = async (userAuth, extraData = {}) => {
   if (!userAuth) return;

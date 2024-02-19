@@ -1,8 +1,8 @@
-.ShopPage-Container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 10px;
-  row-gap: 50px;
-  max-width: 1440px;
-  margin: 30px auto;
+.ShopPage {
+  &-Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
 }

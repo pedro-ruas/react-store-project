@@ -1,0 +1,33 @@
+.CategoryPreview {
+  &-Container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  &-Title {
+    text-transform: uppercase;
+    display: flex;
+    width: fit-content;
+    padding: 15px;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+      color: #acacac;
+    }
+  }
+
+  &-Products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 10px;
+    row-gap: 50px;
+    width: 100%;
+    max-width: 1440px;
+    margin: 30px auto;
+  }
+}

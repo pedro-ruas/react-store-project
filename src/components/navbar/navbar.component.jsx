@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ReactComponent as StoreLogo } from "../../assets/logo.svg";
 import { UserContext } from "../../contexts/user.context";
 import { useContext } from "react";
-import { signOutUser } from "../../utils/utils.firebase";
+import { signOutUser } from "../../utils/firebase.utils";
 import { CartIcon } from "../cart-icon/cart-icon.component";
 
 import "./navbar.styles.scss";
