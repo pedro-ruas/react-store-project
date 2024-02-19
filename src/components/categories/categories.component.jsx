@@ -1,5 +1,5 @@
 import "./categories.styles.scss";
-import CATEGORIES from "../../assets/categories.json";
+import CATEGORIES from "../../data/categories.json";
 import { Category } from "../category/category.component";
 
 export function Categories() {

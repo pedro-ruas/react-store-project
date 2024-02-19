@@ -1,0 +1,129 @@
+.CheckoutItems {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &-Container {
+    height: 100%;
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    overflow: hidden;
+  }
+
+  &-Header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 18px 0 10px;
+    gap: 20px;
+
+    &-Text {
+      width: 100%;
+      text-align: center;
+      text-transform: capitalize;
+    }
+
+    &-Product {
+      @extend .CheckoutItems-Header-Text;
+      max-width: 65%;
+      text-align: left;
+    }
+
+    &-Quantity {
+      @extend .CheckoutItems-Header-Text;
+      max-width: 200px;
+    }
+
+    &-Price {
+      @extend .CheckoutItems-Header-Text;
+      max-width: 125px;
+    }
+
+    &-Total {
+      @extend .CheckoutItems-Header-Text;
+      max-width: 125px;
+    }
+  }
+
+  &-Items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+
+      &-track {
+        border-radius: 10px;
+        background: rgba(0,0,0,0.1);
+      }
+
+      &-thumb {
+        border-radius: 10px;
+        background: rgba(0,0,0,0.2);
+
+        &:hover {
+          background: rgba(0,0,0,0.4);
+        }
+
+        &:active {
+          background: rgba(0,0,0,.9);
+        }
+      }
+    }
+
+    &-Container {
+      max-height: calc(100% - 50px);
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      border-collapse: collapse;
+      width: 100%;
+      padding: 25px 35px 25px 25px;
+
+
+    }
+  }
+
+  &-Empty {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+
+  &-Message {
+    font-size: 18px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &-ContinueButton {
+    $continueButtonColor: #5E56DD;
+    color: $continueButtonColor;
+    background-color: transparent;
+    align-self: flex-start;
+    border: none;
+    border-radius: 15px;
+    padding: 15px;
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba($continueButtonColor, 0.1);
+    }
+  }
+}

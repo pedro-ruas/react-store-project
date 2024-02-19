@@ -1,13 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ReactComponent as StoreLogo } from "../../assets/logo.svg";
 import { UserContext } from "../../contexts/user.context";
 import { useContext } from "react";
+import { signOutUser } from "../../utils/firebase.utils";
+import { CartIcon } from "../cart-icon/cart-icon.component";
 
 import "./navbar.styles.scss";
-import { signOutUser } from "../../utils/utils.firebase";
+import { CartDrawer } from "../cart-drawer/cart-drawer.component";
 
 export function Navbar() {
   const { currentUser } = useContext(UserContext);
+  const { pathname } = useLocation();
 
   return (
     <div className="Navbar">
@@ -27,7 +30,11 @@ export function Navbar() {
             SIGN IN
           </Link>
         )}
+
+        {!pathname.includes("/cart") && <CartIcon />}
       </div>
+
+      <CartDrawer />
     </div>
   );
 }

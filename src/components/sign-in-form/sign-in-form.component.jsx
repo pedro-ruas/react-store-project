@@ -2,7 +2,7 @@ import { Form } from "../form/form.component";
 import {
   signInWithGooglePopup,
   signInUserWithEmailAndPassword,
-} from "../../utils/utils.firebase";
+} from "../../utils/firebase.utils";
 import { useState } from "react";
 import "./sign-in-form.styles.scss";
 import { Button } from "../button/button.component";
